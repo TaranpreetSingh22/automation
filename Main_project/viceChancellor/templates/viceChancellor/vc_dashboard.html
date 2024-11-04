@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vice Chancellor Dashboard</title>
+    <style>
+        /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.document-section, .approval-section {
+    margin-top: 20px;
+}
+
+.document-section h2, .approval-section h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.document-viewer {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vice Chancellor Document Approval Dashboard</h1>
+        
+        <!-- Document Display Section -->
+        <div class="document-section">
+            <h2>Document Details</h2>
+            <iframe src="{{ document_url }}" class="document-viewer" title="Document Viewer"></iframe>
+        </div>
+
+        <!-- Approval Section -->
+        <div class="approval-section">
+            <h2>Approval Action</h2>
+            <p>Review the document and provide your approval decision below.</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <!-- Status Dropdown -->
+                <label for="approval_status">Approval Status:</label>
+                <select id="approval_status" name="approval_status" required>
+                    <option value="">Select Status</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Not Approved">Not Approved</option>
+                </select>
+                
+                <!-- Comments Section -->
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments" placeholder="Enter your comments here..."></textarea>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit">Submit Decision</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
