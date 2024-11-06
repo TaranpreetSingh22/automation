@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Management</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.vendor-list {
+    margin: 20px auto;
+    width: 80%;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+a, button {
+    background-color: #800000;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+button:hover, a:hover {
+    background-color: #600000;
+}
+    </style>
+</head>
+<body>
+    <h1>Vendor Management</h1>
+    <div class="vendor-list">
+        <h2>Vendors List</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone No</th>
+                <th>GST Number</th>
+                <th>Items</th>
+            </tr>
+           
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+         
+        </table>
+        <a href="{% url 'add_vendor' %}">Add Vendor</a>
+    </div>
+</body>
+</html>
