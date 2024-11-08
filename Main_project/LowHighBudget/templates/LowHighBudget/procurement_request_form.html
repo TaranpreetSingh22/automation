@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Procurement Request Form</title>
+    <style>
+        /* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    color: #333333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    display: block;
+    margin-top: 15px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+textarea {
+    height: 80px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+#low-budget-fields, #high-budget-fields {
+    margin-top: 15px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Additional Styling for Fieldsets and Sections */
+
+#low-budget-fields, #high-budget-fields {
+    display: none; /* Hidden by default, toggle with JavaScript */
+}
+
+#low-budget-fields.active, #high-budget-fields.active {
+    display: block;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.radio-group label {
+    margin-right: 10px;
+    font-weight: normal;
+}
+
+/* Style adjustments for better alignment */
+
+form div {
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <h2>Procurement Request Form</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Budget Type Radio Buttons -->
+        <label>Budget Type:</label>
+        {{ form.budget_type }}
+
+        <!-- Low Budget Form Fields -->
+        <div id="low-budget-fields">
+            <label for="id_item">Item:</label> {{ form.item }}
+            <label for="id_purpose">Purpose:</label> {{ form.purpose }}
+            <label for="id_cost">Cost (Rs):</label> {{ form.cost }}
+            <label for="id_vendor">Vendor:</label> {{ form.vendor }}
+            <label for="id_person_responsible">Person Responsible:</label> {{ form.person_responsible }}
+            <label for="id_subject">Subject:</label> {{ form.subject }}
+            <label for="id_date">Date:</label> {{ form.date }}
+        </div>
+
+        <!-- High Budget Form Fields -->
+        <div id="high-budget-fields" style="display:none;">
+            <label for="id_from_field">From:</label> {{ form.from_field }}
+            <label for="id_product">Product:</label> {{ form.product }}
+            <label for="id_high_budget_vendor">Vendor:</label> {{ form.high_budget_vendor }}
+            <label for="id_amount">Amount (Rs):</label> {{ form.amount }}
+            <label for="id_high_budget_subject">Subject:</label> {{ form.high_budget_subject }}
+            <label for="id_content">Content:</label> {{ form.content }}
+            <label for="id_high_budget_date">Date:</label> {{ form.high_budget_date }}
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- JavaScript to Toggle Budget Sections -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const budgetTypeRadios = document.querySelectorAll('input[name="budget_type"]');
+            const lowBudgetFields = document.getElementById('low-budget-fields');
+            const highBudgetFields = document.getElementById('high-budget-fields');
+
+            function toggleFields() {
+                if (budgetTypeRadios[0].checked) {
+                    lowBudgetFields.style.display = 'block';
+                    highBudgetFields.style.display = 'none';
+                } else {
+                    lowBudgetFields.style.display = 'none';
+                    highBudgetFields.style.display = 'block';
+                }
+            }
+
+            budgetTypeRadios.forEach(radio => {
+                radio.addEventListener('change', toggleFields);
+            });
+
+            toggleFields();  // Initial toggle based on default selection
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const budgetTypeRadios = document.querySelectorAll('input[name="budget_type"]');
+        const lowBudgetFields = document.getElementById('low-budget-fields');
+        const highBudgetFields = document.getElementById('high-budget-fields');
+
+        function toggleFields() {
+            if (budgetTypeRadios[0].checked) {
+                lowBudgetFields.classList.add('active');
+                highBudgetFields.classList.remove('active');
+            } else {
+                lowBudgetFields.classList.remove('active');
+                highBudgetFields.classList.add('active');
+            }
+        }
+
+        budgetTypeRadios.forEach(radio => {
+            radio.addEventListener('change', toggleFields);
+        });
+
+        toggleFields();  // Initial toggle based on default selection
+    });
+    </script>
+</body>
+</html>
