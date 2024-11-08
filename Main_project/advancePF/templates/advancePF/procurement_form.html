@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement Request Form</title>
+    <link rel="stylesheet" href="{% static 'advancePF/css/procurement_style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{% static 'advancePF/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="form-container">
+        <form method="post" action="">
+            {% csrf_token %}
+
+            <div class="item-section">
+                <h2>Item 1</h2>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+
+                <div class="vendor-section" id="vendor-section-1">
+                    <h3>Vendor 1</h3>
+                    <label for="vendor_name">Vendor Name:</label>
+                    <select id="vendor_name" name="vendor_name">
+                        <option value="">Select Vendor</option>
+                        <option value="vendor1">Vendor 1</option>
+                        <option value="vendor2">Vendor 2</option>
+                    </select>
+
+                    <label for="quote">Quote:</label>
+                    <input type="text" id="quote" name="quote">
+                </div>
+                
+                <button type="button" class="add-vendor">Add Vendor</button>
+            </div>
+
+            <button type="button" class="download-btn">Download PDF and Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript to add vendor sections
+        document.querySelector('.add-vendor').addEventListener('click', function() {
+            const vendorSection = document.querySelector('.vendor-section');
+            const newVendorSection = vendorSection.cloneNode(true);
+            newVendorSection.id = 'vendor-section-' + (document.querySelectorAll('.vendor-section').length + 1);
+            newVendorSection.querySelector('h3').textContent = 'Vendor ' + (document.querySelectorAll('.vendor-section').length + 1);
+            vendorSection.parentNode.insertBefore(newVendorSection, document.querySelector('.add-vendor'));
+        });
+    </script>
+</body>
+</html>

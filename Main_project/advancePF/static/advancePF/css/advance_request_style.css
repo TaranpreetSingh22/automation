@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;  /* Distribute space between logo and links */
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar nav {
+    display: flex;  /* Align the navigation links in a row */
+}
+
+.navbar nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.form-container {
+    background-color: #ebf2f4;
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}

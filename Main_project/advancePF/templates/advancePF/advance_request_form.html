@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Request Form</title>
+    <link rel="stylesheet" href="{% static 'advancePF/css/advance_request_style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{% static 'advancePF/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="form-container">
+        <form method="post" action="">
+            {% csrf_token %}
+            <h1>Advance Request</h1>
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from">
+            
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date">
+            
+            <label for="invoice_date">Proforma Invoice Date:</label>
+            <input type="date" id="invoice_date" name="invoice_date">
+            
+            <label for="amount">Amount (Rs.):</label>
+            <input type="text" id="amount" name="amount">
+            
+            <label for="amount_words">Amount in Words:</label>
+            <input type="text" id="amount_words" name="amount_words">
+            
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company">
+            
+            <label for="purpose">Purpose:</label>
+            <textarea id="purpose" name="purpose"></textarea>
+            
+            <label for="account_user">Account User Name:</label>
+            <input type="text" id="account_user" name="account_user">
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
