@@ -8,7 +8,7 @@ class ProcurementRequestForm(forms.Form):
     ]
 
     # Define fields
-    budget_type = forms.ChoiceField(choices=BUDGET_CHOICES, widget=forms.RadioSelect, label="Budget Type")
+    budget_type = forms.ChoiceField(choices=BUDGET_CHOICES, widget=forms.RadioSelect, label="Budget Type", initial='high')
     
     # Fields for Low Budget
     item = forms.CharField(max_length=100, label="Item")

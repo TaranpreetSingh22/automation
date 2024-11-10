@@ -4,43 +4,151 @@
     <meta charset="UTF-8">
     <title>Admin Page</title>
     <style>
-        body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+        /* Header styles (if included via {% include 'header.html' %}) */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
+        header a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
 
-th {
-    background-color: #f4f4f4;
-}
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main content container */
+        section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form styles */
+        form {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 150px;
+            margin-top: 20px;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        td {
+            color: #333;
+        }
+
+        /* Hover effects for table rows */
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Action links (Edit/Delete) */
+        td a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons in the table (Edit, Delete) */
+        td a.edit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        td a.delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        td a:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            form button {
+                width: 100%;
+                font-size: 1rem;
+            }
+        }
 
     </style>
 </head>
 <body>
-    <header>
-        <h1>User Management</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/logout/">Logout</a>
-        </nav>
-    </header>
+    
+    {% include 'header.html' %}
+
     <section>
         <h2>Admin Dashboard</h2>
         <form method="post">

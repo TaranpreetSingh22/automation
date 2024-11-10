@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;  /* Distribute space between logo and links */
+    align-items: center;
+    padding: 10px 20px;
+    width: 97%;
+}
+
+.navbar .logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar nav {
+    display: flex;  /* Align the navigation links in a row */
+}
+
+.navbar nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+}

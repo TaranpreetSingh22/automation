@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation Request Form</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static '/cseDept/css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-size: cover;
+            background-color: #f4f4f4; 
+
+
+
+
+        }
+
+         .navbar {
+             display: flex;
+             justify-content: flex-start;
+             align-items: center;
+             background-color: #333;
+             padding: 10px 20px;}
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            display: flex;
+            
+        }
+
+        h2 {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .content-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } 
+        form {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input, select, button {
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+<h2>Request for Quotation</h2>
+<div class="content-container">
+    <div class="container">
+        
+        <form id="quotationForm">
+            <label for="vendor">Select Vendor:</label>
+            <select id="vendor" name="vendor" onchange="fillVendorDetails()">
+                <option value="" disabled selected>Select a vendor</option>
+                {% for vendor in vendors %}
+                <option value="{{ vendor.id }}" data-address="{{ vendor.address }}">{{ vendor.name }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="vendor-details">
+                <label for="vendor-name">Vendor Name:</label>
+                <input type="text" id="vendor-name" name="vendor-name" readonly>
+
+                <label for="vendor-address">Vendor Address:</label>
+                <input type="text" id="vendor-address" name="vendor-address" readonly>
+            </div>
+
+            <div class="item">
+                <label for="item">Item:</label>
+                <input type="text" id="item" name="item" placeholder="Enter item name">
+            </div>
+
+            <div class="quantity">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
+            </div>
+
+            <div class="price-unit">
+                <label for="price-unit">Price/Unit:</label>
+                <input type="number" id="price-unit" name="price-unit" placeholder="Enter price per unit">
+            </div>
+
+            <div class="total-cost">
+                <label for="total-cost">Total Cost:</label>
+                <input type="number" id="total-cost" name="total-cost" readonly placeholder="Calculated total cost">
+            </div>
+
+            <button type="button" id="downloadPdf">Download PDF</button>
+        </form>
+    </div>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script>
+    function fillVendorDetails() {
+        const vendorSelect = document.getElementById('vendor');
+        const vendorId = vendorSelect.value;
+        
+        fetch(`/get_vendor/request_quotation${vendorId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('vendor-name').value = data.name;
+                document.getElementById('vendor-address').value = data.address;
+            });
+    }
+
+    document.getElementById('price-unit').addEventListener('input', updateTotalCost);
+    document.getElementById('quantity').addEventListener('input', updateTotalCost);
+
+    function updateTotalCost() {
+        const quantity = document.getElementById('quantity').value;
+        const pricePerUnit = document.getElementById('price-unit').value;
+        const totalCost = quantity * pricePerUnit;
+        document.getElementById('total-cost').value = totalCost;
+    }
+
+    document.getElementById('downloadPdf').addEventListener('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const vendor = document.getElementById('vendor-name').value;
+        const address = document.getElementById('vendor-address').value;
+        const item = document.getElementById('item').value;
+        const quantity = document.getElementById('quantity').value;
+        const pricePerUnit = document.getElementById('price-unit').value;
+        const totalCost = document.getElementById('total-cost').value;
+
+        // Generate PDF content
+        const content = `
+            Requesting the quotation\n\n
+            From,
+            The HOD,
+            School of Computer Science,
+            Hubballi.\n\n
+            To,
+            ${vendor},
+            ${address}.\n\n
+
+We are interested in obtaining a quotation for the following:
+
+Item: ${item}
+
+Kindly provide us with a formal quotation. Additionally, please include details such as delivery timelines, terms of payment, and any other relevant information. 
+
+Thank you for considering our request.\n\n
+            Quantity: ${quantity}\n
+            Price/Unit: ${pricePerUnit}\n
+            Total Cost: ${totalCost}
+        `;
+
+        // Split content into lines
+        const lines = doc.splitTextToSize(content, 180);
+
+        // Add lines to PDF
+        doc.text(lines, 20, 20);
+
+        // Save PDF
+        doc.save('quotation.pdf');
+    });
+</script>
+
+</body>
+</html>

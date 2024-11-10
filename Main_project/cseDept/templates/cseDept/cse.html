@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-image: url(Clite.jpg);
+        background-size: cover;
+        position: relative;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 5px 15px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo img {
+        height: 50px;
+      }
+
+      .menu {
+        display: flex;
+        align-items: center;
+      }
+
+      .menu a {
+        color: white;
+        text-decoration: none;
+        padding: 12px 20px;
+        margin-right: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+      }
+
+      .menu a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+      }
+
+      .menu .dropdown {
+        position: relative;
+      }
+
+      .menu .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1002;
+        min-width: 200px;
+        border-radius: 5px;
+      }
+
+      .menu .dropdown:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+
+      .menu .dropdown-content a {
+        color: black;
+        padding: 12px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        transition: background-color 0.3s;
+      }
+
+      .menu .dropdown-content a:hover {
+        background-color: #e2e2e2;
+        border-radius: 5px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .text-content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: left;
+        margin-top: 10%;
+        padding: 0 5%;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(23, 22, 22, 0.651);
+        z-index: 1000;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 600px;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .message-container {
+        text-align: center;
+        margin-top: 10%;
+        font-size: 24px;
+        color: white;
+        position: relative;
+        height: 50px;
+        z-index: 1;
+      }
+
+      .welcome-message {
+        color: white;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #scrollingText {
+        position: absolute;
+        white-space: nowrap;
+        animation: scroll 10s linear infinite;
+        color: white;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+        }
+
+        .menu {
+          flex-direction: column;
+        }
+
+        .text-content {
+          margin-top: 15%;
+          padding: 0 2%;
+        }
+
+        .modal-content {
+          width: 95%;
+        }
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url(Clite.jpg);
+        background-size: cover;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .letter {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .header,
+      .footer {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .content {
+        margin: 20px 0;
+      }
+
+      .input-section {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .action-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 4px #999;
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+      }
+
+      .action-button:hover {
+        background-color: #45a049;
+      }
+
+      .action-button:active {
+        background-color: #45a049;
+        box-shadow: 0 2px #666;
+        transform: translateY(2px);
+      }
+    </style>
+  </head>
+  <body>
+
+    {% include 'header.html' %}
+
+    <div class="overlay">
+    
+
+      <!-- Scrolling Text Section -->
+      <div id="messageContainer" class="message-container">
+        <p id="welcomeMessage" class="welcome-message">
+          Welcome to School Of Computer Science Engineering
+        </p>
+        <p id="scrollingText" class="hidden">
+          School Of Computer Science Engineering
+        </p>
+      </div>
+
+      <div class="text-background"></div>
+      <!-- Text content -->
+      <div class="text-content">
+        <p>Inspiring excellence, nurturing talent.</p>
+        <p>
+          KLE Technological University (KLE Tech) has its roots in one of the
+          premier Engineering Institutions of Karnataka, B. V. Bhoomaraddi
+          College of Engineering and Technology (BVB), a prestigious Engineering
+          College in Hubballi. The founding organization KLE Society, Belgaum,
+          established BVB College in 1947 to create an institution that would
+          lay the foundation of modern engineering education in the northern
+          region of Karnataka. Over time, it gained tremendous credibility with
+          the industries and employers and emerged as a brand to reckon with.
+          The Alumni of the Institute have done exceedingly well in all spheres
+          of life at both national and international levels and brought name and
+          fame to themselves and their alma mater. To maintain and enhance its
+          relevance in meeting global economies’ ever-changing demands, the BVB
+          college, under the leadership of Dr. Prabhakar Kore, undertook a
+          strategic initiative to transform itself into a University of National
+          Distinction.
+        </p>
+      </div>
+      <h1>{{ username }}</h1>
+      <!-- Modal Popup -->
+      <div id="notificationPopup" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closePopup()">&times;</span>
+          <h2>Notification</h2>
+          <p>Please note that you are proceeding to the selected form.</p>
+          <button onclick="proceed()">Proceed</button>
+          <button onclick="closePopup()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var targetUrl = "";
+
+      function showPopup(event, url) {
+        event.preventDefault(); // Prevent the default link behavior
+        targetUrl = url;
+        document.getElementById("notificationPopup").style.display = "block";
+      }
+
+      function closePopup() {
+        document.getElementById("notificationPopup").style.display = "none";
+      }
+
+      function proceed() {
+        window.location.href = `/${targetUrl}`;
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          document.getElementById("welcomeMessage").classList.add("hidden");
+          document.getElementById("scrollingText").classList.remove("hidden");
+        }, 5000); // Change after 5 seconds
+      });
+
+      document
+        .querySelector(".dropdown-toggle")
+        .addEventListener("click", function () {
+          const dropdownContent = document.querySelector(".dropdown-content");
+          dropdownContent.style.display =
+            dropdownContent.style.display === "block" ? "none" : "block";
+        });
+    </script>
+  </body>
+</html>

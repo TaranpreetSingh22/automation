@@ -8,15 +8,9 @@
     <link rel="stylesheet" href="{% static 'advancePF/css/procurement_style.css' %}">
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <img src="{% static 'advancePF/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Logout</a>
-            </nav>
-        </div>
-    </header>
+ 
+    {% include 'header.html' %}
+
     <div class="form-container">
         <form method="post" action="">
             {% csrf_token %}

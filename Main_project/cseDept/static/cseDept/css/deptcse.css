@@ -1,0 +1,212 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url(Clite.jpg);
+    background-size: cover;
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 5px 15px; /* Padding for the navbar */
+    position: fixed;
+    width: 100%;
+    top: 0; /* Ensure navbar is at the top */
+    z-index: 1000;
+}
+
+.logo img {
+    height: 50px; /* Slightly larger logo */
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px; /* Increased padding */
+    margin-right: 15px; /* Increased margin for spacing */
+    font-size: 16px; /* Increased font size */
+    font-weight: 600; /* Bold font weight */
+    transition: background-color 0.3s; /* Transition for background color */
+}
+
+.menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+.menu .dropdown {
+    position: relative;
+}
+
+.menu .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1002;
+    min-width: 200px; /* Minimum width for dropdown */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.menu .dropdown:hover .dropdown-content {
+    display: block; /* Show dropdown on hover */
+    animation: fadeIn 0.3s; /* Smooth dropdown animation */
+}
+
+.menu .dropdown-content a {
+    color: black;
+    padding: 12px 20px; /* Increased padding */
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* Font size for dropdown items */
+    transition: background-color 0.3s; /* Transition for dropdown item hover */
+}
+
+.menu .dropdown-content a:hover {
+    background-color: #e2e2e2; /* Light gray hover effect */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+/* Dropdown Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px); /* Slightly move up */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Move back to original position */
+    }
+}
+
+/* Media Queries for responsive design */
+@media (max-width: 768px) {
+    .menu .dropdown-content {
+        left: 0; /* Position dropdown to the left */
+        right: auto; /* Prevent cutting off on the right */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu .dropdown-content {
+        left: 0; /* Position dropdown to the left */
+        right: auto; /* Prevent cutting off on the right */
+    }
+}
+
+.text-content {
+    position: relative; /* Ensure stacking context */
+    z-index: 1; /* Above transparent background */
+    color: white; /* Text color */
+    text-align: left; /* Align text to the left */
+    margin-top: 10%; /* Use percentage for margin */
+    padding: 0 5%; /* Add padding to left and right */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(23, 22, 22, 0.651); /* Semi-transparent black background */
+    z-index: 1000; /* Behind dropdown */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001; /* Higher than overlay */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Make modal width responsive */
+    max-width: 600px; /* Set a max width */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Message Styles */
+.message-container {
+    text-align: center;
+    margin-top: 10%; /* Use percentage for margin */
+    font-size: 24px;
+    color: white; /* Change text color to white */
+    position: relative;
+    height: 50px;
+    z-index: 1; /* Lower than dropdown */
+}
+
+.welcome-message {
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+#scrollingText {
+    position: absolute;
+    white-space: nowrap;
+    animation: scroll 10s linear infinite;
+    color: white; /* Change scrolling text color to white */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+    
+    .menu {
+        flex-direction: column; /* Stack menu items */
+    }
+
+    .text-content {
+        margin-top: 15%; /* Increase margin on small screens */
+        padding: 0 2%; /* Less padding on smaller screens */
+    }
+
+    .modal-content {
+        width: 95%; /* Adjust modal width for smaller screens */
+    }
+}
+
