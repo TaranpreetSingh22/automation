@@ -14,4 +14,4 @@ def add_vendor(request):
             return redirect('vendor_list')
     else:
         form = VendorForm()
-    return render(request, 'vendors/add_vendor.html', {'form': form})
+    return render(request, 'vmdashboard/add_vendor.html', {'form': form})

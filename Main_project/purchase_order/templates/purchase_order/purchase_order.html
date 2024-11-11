@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Purchase Order</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
+        
         /* Basic body styling */
 body {
     font-family: Arial, sans-serif;
@@ -12,6 +15,14 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
+ul{
+            display: flex;
+        }
+
+        ul>li{
+            list-style: none;
+        }
 
 /* Center the form and give it a max width */
 form {
@@ -93,8 +104,17 @@ button:hover {
     </style>
 </head>
 <body>
-
-    {% include 'header.html' %}
+    
+    <header>
+        <div class="navbar">
+            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <h2>Create Purchase Order</h2>
     <form method="POST" enctype="multipart/form-data">

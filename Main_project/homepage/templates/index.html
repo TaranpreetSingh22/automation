@@ -7,20 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KLE University</title>
     <link rel="stylesheet" href="../static/homepage/style.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
+    <style>
+        .navbar nav ul{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <div class="navbar">
+            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="cse-Dept/">Department</a></li>
+                    <li><a href="budget-forms/">Finance</a></li>
+                    <li><a href="purchase-order-form/">Purchase</a></li>
+                    <li><a href="vicechancellor-dashboard/">Vice-Chancellor</a></li>
+                    <li><a href="cse-Dept/deptcse/">About</a></li>
+                    <li><a href="admin-dashboard/">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>KLE University</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Department</a></li>
-                <li><a href="#">Finance Department</a></li>
-                <li><a href="#">Registrar</a></li>
-                <li><a href="#">Vice Chancellor</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
+        <h1>KLE TECHNOLOGICAL UNIVERSITY HUBLI</h1>
+    
         <div class="content">
             <h2>Welcome to KLE University</h2>
             <p>Explore our programs and opportunities.</p>

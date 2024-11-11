@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
+    
+    <style>
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+        }
+        .login-container {
+            width: 600px;
+            height: 350px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            margin: 2% auto;
+        }
+        .login-image {
+            flex: 1;
+            background: url('./images/hubblii-campus-contactus.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 10px 0 0 10px;
+        }
+        .login-form {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .role-select {
+            margin-bottom: 20px;
+        }
+        .remember-me {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remember-me input {
+            margin-right: 10px;
+        }
+        .btn-login {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-login:hover {
+            background-color: #45a049;
+        }
+        .messages {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+<div class="login-container">
+    <div class="login-image"></div>
+    <div class="login-form">
+        <h2>Login</h2>
+
+        <!-- Error Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="role-select">
+            <select name="role" required>
+                <option value="role">Select Role</option>
+                <option value="hod">HOD</option>
+                <option value="reg">Registrar</option>
+                <option value="vc">Vice Chancellor</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <div class="remember-me">
+                <label for="remember_me">Remember me</label>
+                <input type="checkbox" name="remember_me">
+            </div>
+
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

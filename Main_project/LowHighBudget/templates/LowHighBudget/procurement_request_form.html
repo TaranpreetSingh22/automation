@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Procurement Request Form</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
         /* Reset some default styles */
         * {
@@ -41,6 +43,14 @@
             display: flex;
             justify-content: center;
             gap: 20px;
+        }
+
+        ul{
+            display: flex;
+        }
+
+        ul>li{
+            list-style: none;
         }
 
         nav a {
@@ -175,7 +185,16 @@
 </head>
 <body>
 
-    {% include 'header.html' %} <!-- Include your header here -->
+    <header>
+        <div class="navbar">
+            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header> <!-- Include your header here -->
 
     <!-- Form wrapper to provide space below the header -->
     <div class="content-wrapper">

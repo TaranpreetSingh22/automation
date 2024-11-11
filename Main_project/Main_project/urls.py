@@ -28,4 +28,5 @@ urlpatterns = [
     path('vicechancellor-dashboard/', include('viceChancellor.urls')),
     path('vendor-management-dashboard/', include('vmdashboard.urls')),
     path('cse-Dept/', include('cseDept.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
