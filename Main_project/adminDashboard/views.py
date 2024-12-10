@@ -11,7 +11,7 @@ def add_user(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('admin_page')
+            return redirect('adminDashboard:add_user')
     else:
         form = UserForm()
     return render(request, 'adminDashboard/add_user.html', {'form': form})

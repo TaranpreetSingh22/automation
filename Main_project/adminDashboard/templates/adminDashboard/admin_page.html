@@ -151,10 +151,10 @@ body {
 
     <section>
         <h2>Admin Dashboard</h2>
-        <form method="post">
+        <form method="post" action="{% url 'adminDashboard:add_user' %}">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Add User</button>
+            <button type="submit" class="btn-submit">Add User</button>
         </form>
         <table>
             <thead>

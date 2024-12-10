@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vice Chancellor Dashboard</title>
     <style>
-        /* Basic reset */
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
@@ -20,7 +18,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin: 60px auto 0;/* Add margin to push content below header */
+            margin: 60px auto 0;
         }
 
         h1 {
@@ -40,12 +38,19 @@
             margin-bottom: 10px;
         }
 
-        .document-viewer {
-            width: 100%;
-            height: 400px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .document-link {
+            display: inline-block;
             margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .document-link:hover {
+            background-color: #0056b3;
         }
 
         label {
@@ -55,16 +60,23 @@
             color: #333;
         }
 
-        select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+        .radio-group {
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
         }
 
         textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
             resize: vertical;
             min-height: 80px;
         }
@@ -89,21 +101,16 @@
             background-color: #218838;
         }
 
-        /* Media Query for mobile responsiveness */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
-            }
-
-            .document-viewer {
-                height: 300px;
             }
 
             h1 {
                 font-size: 20px;
             }
 
-            label, select, textarea, .btn-submit {
+            label, .btn-submit {
                 font-size: 14px;
             }
         }
@@ -119,7 +126,7 @@
         <!-- Document Display Section -->
         <div class="document-section">
             <h2>Document Details</h2>
-            <iframe src="{{ document_url }}" class="document-viewer" title="Document Viewer"></iframe>
+            <a href="{{ document_url }}" class="document-link" download>Download Document</a>
         </div>
 
         <!-- Approval Section -->
@@ -129,13 +136,12 @@
             <form action="" method="post">
                 {% csrf_token %}
                 
-                <!-- Status Dropdown -->
-                <label for="approval_status">Approval Status:</label>
-                <select id="approval_status" name="approval_status" required>
-                    <option value="">Select Status</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Not Approved">Not Approved</option>
-                </select>
+                <!-- Approval Status Radio Buttons -->
+                <label>Approval Status:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="approval_status" value="Approved" required> Approved</label>
+                    <label><input type="radio" name="approval_status" value="Not Approved" required> Not Approved</label>
+                </div>
                 
                 <!-- Comments Section -->
                 <label for="comments">Comments:</label>
