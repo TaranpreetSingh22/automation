@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
 
 body {
@@ -49,12 +51,12 @@ body {
         }
 
         /* Form styles */
-        form {
+        button {
             margin-bottom: 30px;
             text-align: center;
         }
 
-        form button {
+        button {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -66,7 +68,7 @@ body {
             margin-top: 20px;
         }
 
-        form button:hover {
+        button:hover {
             background-color: #45a049;
         }
 
@@ -137,10 +139,15 @@ body {
                 font-size: 0.9rem;
             }
 
-            form button {
+            button {
                 width: 100%;
                 font-size: 1rem;
             }
+        }
+
+        #add-btns{
+            display: flex;
+            justify-content: space-around;
         }
 
     </style>
@@ -151,11 +158,10 @@ body {
 
     <section>
         <h2>Admin Dashboard</h2>
-        <form method="post" action="{% url 'adminDashboard:add_user' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn-submit">Add User</button>
-        </form>
+        <div id="add-btns">
+            <a href="{% url 'adminDashboard:add_user' %}"><button type="submit" class="btn-submit">Add User</button></a>
+            <a href="{% url 'vmdashboard:vendor_list' %}"><button type="submit" class="btn-submit">Vendor Management</button></a>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -163,24 +169,28 @@ body {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Created At</th>
+                    
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                
+                {% for user in users %}
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    
                     <td>
                         <a href="#">Edit</a>
                         <a href="#">Delete</a>
                     </td>
                 </tr>
-            
+                {% empty %}
+                    <tr>
+                        <td colspan="6">No users found.</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>

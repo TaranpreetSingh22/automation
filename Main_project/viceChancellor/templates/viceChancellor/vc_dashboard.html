@@ -13,7 +13,7 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -28,73 +28,65 @@
             font-size: 24px;
         }
 
-        .document-section, .approval-section {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
         }
 
-        .document-section h2, .approval-section h2 {
-            font-size: 1.5em;
-            color: #444;
-            margin-bottom: 10px;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
         }
 
-        .document-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .document-link:hover {
-            background-color: #0056b3;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
+        th {
+            background-color: #f4f4f4;
             color: #333;
         }
 
-        .radio-group {
-            margin-top: 10px;
-        }
-
         .radio-group label {
-            display: inline-block;
-            margin-right: 15px;
+            margin-right: 10px;
             font-weight: normal;
         }
 
         textarea {
             width: 100%;
-            padding: 10px;
-            margin-top: 15px;
+            padding: 8px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 14px;
             resize: vertical;
-            min-height: 80px;
+        }
+
+        .btn-send {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-send:hover {
+            background-color: #0056b3;
         }
 
         .btn-submit {
             display: block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
+            margin: 20px auto;
+            padding: 12px 24px;
             background-color: #28a745;
-            color: #fff;
-            font-size: 1.1em;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
             font-weight: bold;
             text-align: center;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         .btn-submit:hover {
@@ -102,15 +94,19 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
             h1 {
                 font-size: 20px;
             }
 
-            label, .btn-submit {
+            table {
+                font-size: 14px;
+            }
+
+            .btn-send {
+                font-size: 12px;
+            }
+
+            .btn-submit {
                 font-size: 14px;
             }
         }
@@ -122,35 +118,40 @@
 
     <div class="container">
         <h1>Vice Chancellor Document Approval Dashboard</h1>
-        
-        <!-- Document Display Section -->
-        <div class="document-section">
-            <h2>Document Details</h2>
-            <a href="{{ document_url }}" class="document-link" download>Download Document</a>
-        </div>
 
-        <!-- Approval Section -->
-        <div class="approval-section">
-            <h2>Approval Action</h2>
-            <p>Review the document and provide your approval decision below.</p>
-            <form action="" method="post">
-                {% csrf_token %}
-                
-                <!-- Approval Status Radio Buttons -->
-                <label>Approval Status:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="approval_status" value="Approved" required> Approved</label>
-                    <label><input type="radio" name="approval_status" value="Not Approved" required> Not Approved</label>
-                </div>
-                
-                <!-- Comments Section -->
-                <label for="comments">Comments:</label>
-                <textarea id="comments" name="comments" placeholder="Enter your comments here..."></textarea>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn-submit">Submit Decision</button>
-            </form>
-        </div>
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Document Name</th>
+                        <th>Download</th>
+                        <th>Approval Status</th>
+                        <th>Comments</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ document_name }}</td>
+                        <td><a href="{{ document_url }}" class="btn-send" download>Download</a></td>
+                        <td>
+                            <div class="radio-group">
+                                <label><input type="radio" name="approval_status" value="Approved" required> Approved</label>
+                                <label><input type="radio" name="approval_status" value="Not Approved" required> Not Approved</label>
+                            </div>
+                        </td>
+                        <td>
+                            <textarea name="comments" placeholder="Enter comments..."></textarea>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn-submit">Submit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
+
 </body>
 </html>

@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     "viceChancellor",
     "vmdashboard",
     "cseDept",
-    "accounts",
     "login",
     "registrar",
+    "hodDashboard",
 ]
 
 MIDDLEWARE = [
@@ -145,3 +145,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = 'home'  # After login, redirect to home page or dashboard
+
+AUTH_USER_MODEL = 'login.CustomUser'
+
+CSRF_COOKIE_NAME = 'csrftoken'  # Default name for CSRF token cookie
+SESSION_COOKIE_NAME = 'sessionid'  # Default session cookie name
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

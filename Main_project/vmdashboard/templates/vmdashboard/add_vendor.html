@@ -2,56 +2,86 @@
 <html>
 <head>
     <title>Add Vendor</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-}
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
 
-h1 {
-    color: #333;
-}
+        h2 {
+            color: #333;
+        }
 
-.vendor-list {
-    margin: 20px auto;
-    width: 80%;
-    text-align: left;
-}
+        form {
+            margin: 20px auto;
+            width: 50%;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
+        form input, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
 
-table, th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-}
+        form button {
+            background-color: #800000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-a, button {
-    background-color: #800000;
-    color: white;
-    padding: 10px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin: 10px;
-    cursor: pointer;
-}
+        form button:hover {
+            background-color: #600000;
+        }
 
-button:hover, a:hover {
-    background-color: #600000;
-}
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #800000;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #600000;
+        }
+
+        .messages {
+            color: red;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
+    {% include 'header.html' %}
+
     <h2>Add Vendor</h2>
+
+    <div class="messages">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Add Vendor</button>
     </form>
-    <a href="{% url 'vendor_list' %}">Back to Vendor List</a>
+
+    <a href="{% url 'vmdashboard:vendor_list' %}">Back to Vendor List</a>
 </body>
 </html>

@@ -27,8 +27,8 @@ urlpatterns = [
     path('purchase-order-form/', include('purchase_order.urls')),
     path('vicechancellor-dashboard/', include('viceChancellor.urls')),
     path('vendor-management-dashboard/', include('vmdashboard.urls')),
-    path('cse-Dept/', include('cseDept.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('about/', include('cseDept.urls')),
     path('login/', include('login.urls')),
     path('registrar-dashboard/', include('registrar.urls')),
+     path('hod-dashboard/', include('hodDashboard.urls')),
 ]

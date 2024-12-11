@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
       body {
         margin: 0;
@@ -203,7 +205,7 @@
 
       body {
         font-family: Arial, sans-serif;
-        background-image: url(Clite.jpg);
+        background-image: url("{% static '/images/bg.jpg' %}");
         background-size: cover;
       }
 
@@ -271,10 +273,10 @@
       <!-- Scrolling Text Section -->
       <div id="messageContainer" class="message-container">
         <p id="welcomeMessage" class="welcome-message">
-          Welcome to School Of Computer Science Engineering
+          Welcome to KLE Technological University
         </p>
         <p id="scrollingText" class="hidden">
-          School Of Computer Science Engineering
+          KLE Technological University
         </p>
       </div>
 

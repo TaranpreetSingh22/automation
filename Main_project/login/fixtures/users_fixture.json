@@ -1,0 +1,42 @@
+[
+    {
+        "model": "login.customuser",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "password": "admin123",
+            "role": "admin",
+            "email": "admin@example.com"
+        }
+    },
+    {
+        "model": "login.customuser",
+        "pk": 2,
+        "fields": {
+            "username": "registrar",
+            "password": "rg123",
+            "role": "rg",
+            "email": "rg@example.com"
+        }
+    },
+    {
+        "model": "login.customuser",
+        "pk": 3,
+        "fields": {
+            "username": "hod",
+            "password": "hod123",
+            "role": "hod",
+            "email": "hod@example.com"
+        }
+    },
+    {
+        "model": "login.customuser",
+        "pk": 4,
+        "fields": {
+            "username": "vc",
+            "password": "vc123",
+            "role": "vc",
+            "email": "vc@example.com"
+        }
+    }
+]

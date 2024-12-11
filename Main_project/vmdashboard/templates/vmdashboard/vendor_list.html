@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Vendor Management</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -46,6 +48,9 @@ button:hover, a:hover {
     </style>
 </head>
 <body>
+
+    {% include 'header.html' %}
+
     <h1>Vendor Management</h1>
     <div class="vendor-list">
         <h2>Vendors List</h2>
@@ -57,17 +62,17 @@ button:hover, a:hover {
                 <th>GST Number</th>
                 <th>Items</th>
             </tr>
-           
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-         
+            {% for vendor in vendors %}
+                <tr>
+                    <td>{{ vendor.id }}</td>
+                    <td>{{ vendor.name }}</td>
+                    <td>{{ vendor.phone_number }}</td>
+                    <td>{{ vendor.gst_number }}</td>
+                    <td>{{ vendor.items }}</td>
+                </tr>
+            {% endfor %}
         </table>
-        <a href="{% url 'add_vendor' %}">Add Vendor</a>
+        <a href="{% url 'vmdashboard:add_vendor' %}">Add Vendor</a>
     </div>
 </body>
 </html>
