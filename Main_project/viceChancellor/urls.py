@@ -7,6 +7,6 @@ app_name = 'viceChancellor'
 
 urlpatterns = [
     path('', views.vc_dashboard, name='vc_dashboard'),
-    path('approve/<int:request_id>/', views.approve_request, name='approve_request'),
-    path('reject/<int:request_id>/', views.reject_request, name='reject_request'),
+    path('approve-quotation/<int:quotation_id>/', views.approve_quotation, name='approve_quotation'),
+    path('reject-quotation/<int:quotation_id>/', views.reject_quotation, name='reject_quotation'),
 ]

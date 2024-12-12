@@ -6,18 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advance Request Form</title>
     <link rel="stylesheet" href="{% static 'advancePF/css/advance_request_style.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <img src="{% static 'advancePF/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Logout</a>
-            </nav>
-        </div>
-    </header>
+
+    {% include 'header.html' %}
+
     <div class="form-container">
+
+          <!-- Display messages (success or error) -->
+          {% if messages %}
+          <div class="alert">
+              {% for message in messages %}
+                  <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+      {% endif %}
+
         <form method="post" action="">
             {% csrf_token %}
             <h1>Advance Request</h1>

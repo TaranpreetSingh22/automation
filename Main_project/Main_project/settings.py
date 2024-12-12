@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "login",
     "registrar",
     "hodDashboard",
+    "financeManagement",
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,12 @@ CSRF_COOKIE_NAME = 'csrftoken'  # Default name for CSRF token cookie
 SESSION_COOKIE_NAME = 'sessionid'  # Default session cookie name
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# settings.py
+
+import os
+
+# Media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

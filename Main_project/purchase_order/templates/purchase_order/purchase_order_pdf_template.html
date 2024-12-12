@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order {{ purchase_order.ref }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 8px; border: 1px solid #ddd; }
+        th { text-align: left; background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<h1>Purchase Order #{{ purchase_order.ref }}</h1>
+<p><strong>Date:</strong> {{ purchase_order.date }}</p>
+<p><strong>To Address:</strong> {{ purchase_order.to_address }}</p>
+<p><strong>Instruments:</strong> {{ purchase_order.instruments }}</p>
+<p><strong>Terms:</strong> {{ purchase_order.terms }}</p>
+
+<h2>Order Items</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Description</th>
+            <th>HSN Code</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+            <th>GST (%)</th>
+            <th>Total with GST</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.item_code }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.hsn_code }}</td>
+            <td>{{ item.qty }}</td>
+            <td>{{ item.unit_price }}</td>
+            <td>{{ item.total }}</td>
+            <td>{{ item.gst_percentage }}</td>
+            <td>{{ item.total_with_gst }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Totals</h3>
+<ul>
+    <li><strong>Total (without GST):</strong> {{ purchase_order.total }}</li>
+    <li><strong>Total GST:</strong> {{ purchase_order.total_gst }}</li>
+    <li><strong>Grand Total (with GST):</strong> {{ purchase_order.grand_total }}</li>
+</ul>
+
+</body>
+</html>

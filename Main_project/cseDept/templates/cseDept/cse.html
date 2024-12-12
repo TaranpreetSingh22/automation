@@ -15,18 +15,6 @@
         position: relative;
       }
 
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #333;
-        padding: 5px 15px;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-      }
-
       .logo img {
         height: 50px;
       }
@@ -111,7 +99,6 @@
         width: 100%;
         height: 100%;
         background-color: rgba(23, 22, 22, 0.651);
-        z-index: 1000;
       }
 
       .modal {
@@ -220,12 +207,6 @@
         margin-top: 20px;
       }
 
-      .header,
-      .footer {
-        text-align: center;
-        margin: 20px 0;
-      }
-
       .content {
         margin: 20px 0;
       }
@@ -261,15 +242,40 @@
         box-shadow: 0 2px #666;
         transform: translateY(2px);
       }
+
+      .navbar nav{
+        z-index: 10;
+      }
+
+      .navbar img{
+        z-index: 10;
+      }
+
+      .navbar nav ul>li{
+            list-style-type: none;
+        }
+
+        .navbar nav ul{
+            display: flex;
+        }
     </style>
   </head>
   <body>
 
-    {% include 'header.html' %}
+    <header>
+      <div class="navbar">
+          <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+          <nav>
+              <ul>
+                  <li><a href="{% url 'homepage:home' %}">Home</a></li>
+                  <li><a href="{% url 'cseDept:cse' %}">About</a></li>
+              </ul>
+          </nav>
+      </div>
+  </header>
+
 
     <div class="overlay">
-    
-
       <!-- Scrolling Text Section -->
       <div id="messageContainer" class="message-container">
         <p id="welcomeMessage" class="welcome-message">
@@ -303,17 +309,6 @@
         </p>
       </div>
       <h1>{{ username }}</h1>
-      <!-- Modal Popup -->
-      <div id="notificationPopup" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="closePopup()">&times;</span>
-          <h2>Notification</h2>
-          <p>Please note that you are proceeding to the selected form.</p>
-          <button onclick="proceed()">Proceed</button>
-          <button onclick="closePopup()">Cancel</button>
-        </div>
-      </div>
-    </div>
 
     <script>
       var targetUrl = "";

@@ -17,6 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,5 +32,9 @@ urlpatterns = [
     path('about/', include('cseDept.urls')),
     path('login/', include('login.urls')),
     path('registrar-dashboard/', include('registrar.urls')),
-     path('hod-dashboard/', include('hodDashboard.urls')),
+    path('hod-dashboard/', include('hodDashboard.urls')),
+    path('finance-dashboard/', include('financeManagement.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

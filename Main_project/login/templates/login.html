@@ -74,11 +74,34 @@
         .btn:hover {
             background-color: #600000;
         }
+
+        .navbar nav ul>li{
+            list-style-type: none;
+        }
+
+        .navbar nav ul{
+            display: flex;
+        }
+
+        .navbar{
+            width: 97%;
+        }
     </style>
 </head>
 <body>
 
-    {% include 'header.html' %}
+    <header>
+        <div class="navbar">
+            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'homepage:home' %}">Home</a></li>
+                    <li><a href="{% url 'cseDept:cse' %}">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
 
     <div class="container">
         <div class="login-box">
@@ -97,10 +120,9 @@
                     <label for="role">Role</label>
                     <select id="role" name="role">
                         <option value="" disabled selected>Select your role</option>
-                        <option value="admin">Admin</option>
-                        <option value="rg">Registrar</option>
-                        <option value="hod">HOD</option>
-                        <option value="vc">Vice Chancellor</option>
+                        {% for user in users %}
+                            <option value="{{ user.role }}">{{user.username}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">

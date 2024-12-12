@@ -4,6 +4,7 @@ from login.models import CustomUser
 from django.urls import reverse
 
 def login_view(request):
+    users = CustomUser.objects.all()
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -28,12 +29,14 @@ def login_view(request):
                         return redirect(reverse('hodDashboard:hod_dashboard'))
                     elif user.role == 'vc':
                         return redirect(reverse('viceChancellor:vc_dashboard'))
+                    elif user.role == 'finance':
+                        return redirect(reverse('financeManagement:finance_dashboard'))
                 else:
-                    return render(request, 'login.html', {'error': 'Role mismatch!'})
+                    return render(request, 'login.html', {'error': 'Role mismatch!','users': users})
             else:
-                return render(request, 'login.html', {'error': 'Invalid username or password'})
+                return render(request, 'login.html', {'error': 'Invalid username or password','users': users})
 
         except CustomUser.DoesNotExist:
             return render(request, 'login.html', {'error': 'Invalid username or password'})
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'users': users})

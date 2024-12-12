@@ -12,8 +12,8 @@
         <div class="navbar">
             <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
             <nav>
-                <a href="#">Home</a>
-                <a href="#">Logout</a>
+                <a href="{% url 'homepage:home' %}">Home</a>
+                <a href="{% url 'homepage:home' %}">Logout</a>
             </nav>
         </div>
     </header>

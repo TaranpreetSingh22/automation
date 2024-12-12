@@ -6,47 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procurement Request Form</title>
     <link rel="stylesheet" href="{% static 'advancePF/css/procurement_style.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/css/header.css' %}">
 </head>
 <body>
- 
     {% include 'header.html' %}
 
     <div class="form-container">
         <form method="post" action="">
             {% csrf_token %}
 
+            <!-- Item Section -->
             <div class="item-section">
                 <h2>Item 1</h2>
                 <label for="description">Description:</label>
                 <textarea id="description" name="description"></textarea>
 
+                <!-- Vendor Section -->
                 <div class="vendor-section" id="vendor-section-1">
                     <h3>Vendor 1</h3>
-                    <label for="vendor_name">Vendor Name:</label>
-                    <select id="vendor_name" name="vendor_name">
+                    <label for="vendor_name_1">Vendor Name:</label>
+                    <select id="vendor_name_1" name="vendor_name_1">
                         <option value="">Select Vendor</option>
-                        <option value="vendor1">Vendor 1</option>
-                        <option value="vendor2">Vendor 2</option>
+                        {% for vendor in vendors %}
+                            <option value="{{ vendor.name }}">{{ vendor.name }}</option>
+                        {% endfor %}
                     </select>
 
-                    <label for="quote">Quote:</label>
-                    <input type="text" id="quote" name="quote">
+                    <label for="quote_1">Quote:</label>
+                    <input type="text" id="quote_1" name="quote_1">
                 </div>
-                
+
+                <!-- Add Vendor Button -->
                 <button type="button" class="add-vendor">Add Vendor</button>
             </div>
 
-            <button type="button" class="download-btn">Download PDF and Submit</button>
+            <!-- Submit Button -->
+            <button type="submit" class="download-btn">Submit and Download</button>
         </form>
+
+        {% if messages %}
+    <div class="alert">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
     </div>
 
     <script>
-        // JavaScript to add vendor sections
+        // JavaScript to add vendor sections dynamically
         document.querySelector('.add-vendor').addEventListener('click', function() {
             const vendorSection = document.querySelector('.vendor-section');
-            const newVendorSection = vendorSection.cloneNode(true);
-            newVendorSection.id = 'vendor-section-' + (document.querySelectorAll('.vendor-section').length + 1);
-            newVendorSection.querySelector('h3').textContent = 'Vendor ' + (document.querySelectorAll('.vendor-section').length + 1);
+            const vendorCount = document.querySelectorAll('.vendor-section').length + 1; // To create unique ID for each section
+            
+            const newVendorSection = vendorSection.cloneNode(true); // Clone the vendor section
+            newVendorSection.id = 'vendor-section-' + vendorCount; // Update ID for new section
+            
+            // Update the vendor name and quote input names and ids to make them unique
+            newVendorSection.querySelector('h3').textContent = 'Vendor ' + vendorCount;
+            newVendorSection.querySelector('#vendor_name_1').id = 'vendor_name_' + vendorCount;
+            newVendorSection.querySelector('#vendor_name_' + vendorCount).name = 'vendor_name_' + vendorCount;
+            newVendorSection.querySelector('#quote_1').id = 'quote_' + vendorCount;
+            newVendorSection.querySelector('#quote_' + vendorCount).name = 'quote_' + vendorCount;
+            
+            // Append the new vendor section before the Add Vendor button
             vendorSection.parentNode.insertBefore(newVendorSection, document.querySelector('.add-vendor'));
         });
     </script>

@@ -101,20 +101,52 @@ button:hover {
     border: 1px solid #ddd;
 }
 
+.alert {
+            padding: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.5s ease;
+        }
+
+        .alert-info {
+            background-color: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+
     </style>
 </head>
 <body>
-    
-    <header>
-        <div class="navbar">
-            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="">Home</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+
+    {% include 'header.html' %}
+
+    {% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
 
     <h2>Create Purchase Order</h2>
     <form method="POST" enctype="multipart/form-data">
@@ -129,5 +161,19 @@ button:hover {
 
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        // Check if there are any messages and hide them after 10 seconds
+        window.onload = function() {
+            const messages = document.querySelectorAll('.alert');
+            messages.forEach((message) => {
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 10000); // 10 seconds (10000 milliseconds)
+            });
+        };
+    </script>
 </body>
+
+
 </html>

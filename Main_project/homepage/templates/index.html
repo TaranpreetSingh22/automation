@@ -10,6 +10,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static '/css/header.css' %}">
     <style>
+        .navbar{
+            width: 97%;
+        }
         .navbar nav ul{
             display: flex;
         }
@@ -22,10 +25,8 @@
             <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="login/">login</a></li>
-                    <li><a href="budget-forms/">Finance</a></li>
-                    <li><a href="purchase-order-form/">Purchase</a></li>
+                    <li><a href="{% url 'homepage:home' %}">Home</a></li>
+                    <li><a href="login/">Login</a></li>
                     <li><a href="about/">About</a></li>
                 </ul>
             </nav>

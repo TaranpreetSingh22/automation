@@ -5,72 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quotation Request Form</title>
     {% load static %}
-<link rel="stylesheet" href="{% static '/cseDept/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'cseDept/css/styles.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-size: cover;
-            background-color: #f4f4f4; 
-
-
-
-
+            padding: 0;
+            background-color: #f4f4f4;
         }
-
-         .navbar {
-             display: flex;
-             justify-content: flex-start;
-             align-items: center;
-             background-color: #333;
-             padding: 10px 20px;}
-
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+        .navbar {
             display: flex;
-            
-        }
-
-        h2 {
-            margin-top: 40px;
-            text-align: center;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
         }
         .content-container {
             display: flex;
             justify-content: center;
             align-items: center;
-        } 
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         form {
             display: flex;
             flex-direction: column;
-
         }
-
         label {
             margin-bottom: 5px;
         }
-
         input, select, button {
             margin-bottom: 15px;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 3px;
         }
-
         button {
-            background-color: red;
+            background-color: #600000;
             color: white;
             border: none;
             cursor: pointer;
         }
-
         button:hover {
-            background-color: #45a049;
+            background-color: red;
         }
+
+        #message-container {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 80%;
+        max-width: 600px;
+    }
+    .message {
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin: 10px 0;
+        text-align: center;
+        color: white;
+    }
+    .message.success {
+        background-color: #28a745;
+    }
+    .message.error {
+        background-color: #dc3545;
+    }
     </style>
 </head>
 <body>
@@ -80,62 +93,52 @@
 <h2>Request for Quotation</h2>
 <div class="content-container">
     <div class="container">
-        
-        <form id="quotationForm">
+        <form id="quotationForm" method="POST" action="{% url 'cseDept:save_quotation' %}">
+            {% csrf_token %}
             <label for="vendor">Select Vendor:</label>
-            <select id="vendor" name="vendor" onchange="fillVendorDetails()">
+            <select id="vendor" name="vendor">
                 <option value="" disabled selected>Select a vendor</option>
                 {% for vendor in vendors %}
-                <option value="{{ vendor.id }}" data-address="{{ vendor.address }}">{{ vendor.name }}</option>
+                <option value="{{ vendor.id }}">{{ vendor.name }}</option>
                 {% endfor %}
             </select>
 
-            <div class="vendor-details">
-                <label for="vendor-name">Vendor Name:</label>
-                <input type="text" id="vendor-name" name="vendor-name" readonly>
+            <label for="item">Item:</label>
+            <input type="text" id="item" name="item" placeholder="Enter item name" required>
 
-                <label for="vendor-address">Vendor Address:</label>
-                <input type="text" id="vendor-address" name="vendor-address" readonly>
-            </div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
 
-            <div class="item">
-                <label for="item">Item:</label>
-                <input type="text" id="item" name="item" placeholder="Enter item name">
-            </div>
+            <label for="price-unit">Price/Unit:</label>
+            <input type="number" id="price-unit" name="price_unit" placeholder="Enter price per unit" required>
 
-            <div class="quantity">
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" placeholder="Enter quantity">
-            </div>
+            <label for="total-cost">Total Cost:</label>
+            <input type="number" id="total-cost" name="total_cost" readonly>
 
-            <div class="price-unit">
-                <label for="price-unit">Price/Unit:</label>
-                <input type="number" id="price-unit" name="price-unit" placeholder="Enter price per unit">
-            </div>
-
-            <div class="total-cost">
-                <label for="total-cost">Total Cost:</label>
-                <input type="number" id="total-cost" name="total-cost" readonly placeholder="Calculated total cost">
-            </div>
-
-            <button type="button" id="downloadPdf">Download PDF</button>
+            <button type="submit" id="submitForm">Submit and Download PDF</button>
         </form>
     </div>
-</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-    <script>
-    function fillVendorDetails() {
-        const vendorSelect = document.getElementById('vendor');
-        const vendorId = vendorSelect.value;
-        
-        fetch(`/get_vendor/request_quotation${vendorId}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('vendor-name').value = data.name;
-                document.getElementById('vendor-address').value = data.address;
-            });
-    }
 
+    {% if messages %}
+<div id="message-container">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+<script>
+    setTimeout(() => {
+        const messageContainer = document.getElementById('message-container');
+        if (messageContainer) {
+            messageContainer.style.display = 'none';
+        }
+    }, 10000); // Hide messages after 10 seconds
+</script>
+{% endif %}
+</div>
+
+<script>
     document.getElementById('price-unit').addEventListener('input', updateTotalCost);
     document.getElementById('quantity').addEventListener('input', updateTotalCost);
 
@@ -146,49 +149,67 @@
         document.getElementById('total-cost').value = totalCost;
     }
 
-    document.getElementById('downloadPdf').addEventListener('click', function() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+    document.getElementById('quotationForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        const vendor = document.getElementById('vendor-name').value;
-        const address = document.getElementById('vendor-address').value;
-        const item = document.getElementById('item').value;
-        const quantity = document.getElementById('quantity').value;
-        const pricePerUnit = document.getElementById('price-unit').value;
-        const totalCost = document.getElementById('total-cost').value;
+    const formData = new FormData(this);
 
-        // Generate PDF content
-        const content = `
-            Requesting the quotation\n\n
-            From,
-            The HOD,
-            School of Computer Science,
-            Hubballi.\n\n
-            To,
-            ${vendor},
-            ${address}.\n\n
+    fetch("{% url 'cseDept:save_quotation' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message); // Show success message
 
-We are interested in obtaining a quotation for the following:
+                // Generate and download PDF
+                generatePDF(data.vendor, data.item, data.quantity, data.price_unit, data.total_cost);
+            } else {
+                alert('Error saving quotation.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
 
-Item: ${item}
+function generatePDF(vendor, item, quantity, pricePerUnit, totalCost) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-Kindly provide us with a formal quotation. Additionally, please include details such as delivery timelines, terms of payment, and any other relevant information. 
+    const content = `
+        Requesting the quotation\n\n
+        From,
+        The HOD,
+        School of Computer Science,
+        Hubballi.\n\n
+        To,
+        Vendor ID: ${vendor}\n\n
 
-Thank you for considering our request.\n\n
-            Quantity: ${quantity}\n
-            Price/Unit: ${pricePerUnit}\n
-            Total Cost: ${totalCost}
-        `;
+        We are interested in obtaining a quotation for the following:\n\n
+        Item: ${item}\n
+        Quantity: ${quantity}\n
+        Price/Unit: ${pricePerUnit}\n
+        Total Cost: ${totalCost}\n\n
+        Kindly provide us with a formal quotation. 
+        Additionally, please include details such as delivery timelines, terms of payment, 
+        and any other relevant information.
 
-        // Split content into lines
-        const lines = doc.splitTextToSize(content, 180);
+        Thank you for considering our request.
+    `;
 
-        // Add lines to PDF
-        doc.text(lines, 20, 20);
+    // Split content into lines for PDF
+    const lines = doc.splitTextToSize(content, 180);
 
-        // Save PDF
-        doc.save('quotation.pdf');
-    });
+    // Add lines to the PDF
+    doc.text(lines, 20, 20);
+
+    // Save the PDF
+    doc.save('quotation.pdf');
+}
+
 </script>
 
 </body>

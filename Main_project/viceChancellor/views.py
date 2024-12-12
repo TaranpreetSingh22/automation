@@ -1,20 +1,25 @@
-# purchase/views.py
-
-from django.shortcuts import render, redirect
-from .models import PurchaseRequest
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from registrar.models import VCQuotations
 
 def vc_dashboard(request):
-    purchase_requests = PurchaseRequest.objects.all()
-    return render(request, 'viceChancellor/vc_dashboard.html', {'purchase_requests': purchase_requests})
+    # Fetch all HOD quotations to display in the table
+    quotations = VCQuotations.objects.all()
+    context = {'quotations': quotations}
+    return render(request, 'viceChancellor/vc_dashboard.html', context)
 
-def approve_request(request, request_id):
-    purchase_request = PurchaseRequest.objects.get(id=request_id)
-    purchase_request.approval_status = 'Approved'
-    purchase_request.save()
-    return redirect('vc_dashboard')
+def approve_quotation(request, quotation_id):
+    # Approve the quotation
+    quotation = get_object_or_404(VCQuotations, id=quotation_id)
+    quotation.status = 'Approved'
+    quotation.save()
+    messages.success(request, 'Quotation approved successfully!')
+    return redirect('viceChancellor:vc_dashboard')
 
-def reject_request(request, request_id):
-    purchase_request = PurchaseRequest.objects.get(id=request_id)
-    purchase_request.approval_status = 'Rejected'
-    purchase_request.save()
-    return redirect('vc_dashboard')
+def reject_quotation(request, quotation_id):
+    # Reject the quotation
+    quotation = get_object_or_404(VCQuotations, id=quotation_id)
+    quotation.status = 'Rejected'
+    quotation.save()
+    messages.error(request, 'Quotation rejected.')
+    return redirect('viceChancellor:vc_dashboard')
