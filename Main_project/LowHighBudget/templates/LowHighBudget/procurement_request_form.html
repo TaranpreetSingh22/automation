@@ -181,25 +181,44 @@
                 font-size: 14px;
             }
         }
+
+        .alert {
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .alert.success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert.error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="navbar">
-            <img src="{% static '/images/kle_logo.png' %}" alt="KLE Technological University Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="">Home</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header> <!-- Include your header here -->
+    {% include 'header.html' %}
 
     <!-- Form wrapper to provide space below the header -->
     <div class="content-wrapper">
         <h2>Procurement Request Form</h2>
-        <form method="post">
+        {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+        <form method="post" action="">
             {% csrf_token %}
 
             <!-- Budget Type Radio Buttons -->
@@ -221,6 +240,7 @@
 
             <!-- High Budget Form Fields -->
             <div id="high-budget-fields">
+                <label for="id_item">Item:</label> {{ form.item }}
                 <label for="id_from_field">From:</label> {{ form.from_field }}
                 <label for="id_product">Product:</label> {{ form.product }}
                 <label for="id_high_budget_vendor">Vendor:</label> {{ form.high_budget_vendor }}
@@ -237,28 +257,39 @@
     <!-- JavaScript to Toggle Budget Sections -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const budgetTypeRadios = document.querySelectorAll('input[name="budget_type"]');
-            const lowBudgetFields = document.getElementById('low-budget-fields');
-            const highBudgetFields = document.getElementById('high-budget-fields');
+    const budgetTypeRadios = document.querySelectorAll('input[name="budget_type"]');
+    const lowBudgetFields = document.getElementById('low-budget-fields');
+    const highBudgetFields = document.getElementById('high-budget-fields');
 
-            function toggleFields() {
-                if (budgetTypeRadios[0].checked) {
-                    lowBudgetFields.classList.add('active');
-                    highBudgetFields.classList.remove('active');
-                } else {
-                    lowBudgetFields.classList.remove('active');
-                    highBudgetFields.classList.add('active');
-                }
-            }
+    function toggleFields() {
+        if (budgetTypeRadios[0].checked) {
+            // Low budget selected
+            lowBudgetFields.classList.add('active');
+            highBudgetFields.classList.remove('active');
 
-            // Add change event listener to toggle fields
-            budgetTypeRadios.forEach(radio => {
-                radio.addEventListener('change', toggleFields);
-            });
+            // Enable required attributes for low-budget fields
+            lowBudgetFields.querySelectorAll('input, textarea').forEach(input => input.required = true);
+            highBudgetFields.querySelectorAll('input, textarea').forEach(input => input.required = false);
+        } else {
+            // High budget selected
+            lowBudgetFields.classList.remove('active');
+            highBudgetFields.classList.add('active');
 
-            // Initial toggle based on default selection
-            toggleFields();
-        });
+            // Enable required attributes for high-budget fields
+            highBudgetFields.querySelectorAll('input, textarea').forEach(input => input.required = true);
+            lowBudgetFields.querySelectorAll('input, textarea').forEach(input => input.required = false);
+        }
+    }
+
+    // Add change event listener to toggle fields
+    budgetTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleFields);
+    });
+
+    // Initial toggle based on default selection
+    toggleFields();
+});
+
     </script>
 
 </body>

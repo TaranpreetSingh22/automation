@@ -100,7 +100,11 @@
 }
 
 #po-link{
-    width: 60%;
+    width: 20%;
+}
+
+th, td {
+    text-align: center;
 }
     </style>
 </head>
@@ -112,6 +116,12 @@
         <h1>Finance Dashboard</h1>
     </div>
     <div class="container">
+
+          <!-- Links -->
+           <div style="display: flex;">
+                <a href="{% url 'cseDept:reqQuot' %}" class="link">Request Quotation</a>
+                <a href="{% url 'advancePF:procurement_request' %}" class="link">Procurement Request</a>
+            </div>
         <!-- Table for Quotation Details -->
         <div class="table-container">
             <h2>Available Quotations</h2>
@@ -186,11 +196,14 @@
                             {% endif %}
                         </td>
                         <td>{{ approval.status }}</td>
-                        <td style="text-align: center;">
+                        <td style="text-align: center; display: flex; align-items: center;
+                        justify-content: center;">
                             {% if approval.status == "Rejected" or approval.status == "Pending" %}
                                 ----------------------
                             {% else %}
                                 <a href="{% url 'purchase_order:purchase_order' %}" class="link" id="po-link">Create Purchase Order</a>
+                                <a href="{% url 'advancePF:advance_request' %}" class="link">Advance Payment</a>
+                                <a href="{% url 'LowHighBudget:procurement_request' %}" class="link">Create Budget</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -202,11 +215,6 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Links -->
-        <a href="{% url 'cseDept:reqQuot' %}" class="link">Request Quotation</a>
-        <a href="{% url 'advancePF:procurement_request' %}" class="link">Procurement Request</a>
-        <a href="{% url 'advancePF:advance_request' %}" class="link">Advance Payment</a>
     </div>
 
     <script>

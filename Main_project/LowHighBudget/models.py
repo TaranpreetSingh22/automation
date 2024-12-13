@@ -17,5 +17,13 @@ class ProcurementRequest(models.Model):
     date = models.DateField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)  # For high budget form
 
+    # High-budget specific fields
+    from_field = models.CharField(max_length=100, blank=True, null=True)
+    product = models.CharField(max_length=100, blank=True, null=True)
+    high_budget_vendor = models.CharField(max_length=100, blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    high_budget_subject = models.CharField(max_length=200, blank=True, null=True)
+    high_budget_date = models.DateField(blank=True, null=True)
+
     def __str__(self):
         return f"{self.item or self.product} - {self.budget_type}"
